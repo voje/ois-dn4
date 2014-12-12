@@ -2,77 +2,132 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-    	<title>Svetovalec</title>
-    	<!-- Bootstrap -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-	    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	    <script src="myScript.js"></script>
+  	<title>Svetovalec</title>
+  	<!-- Bootstrap -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="myJQuery.js"></script>
+    <script src="myScript.js"></script>
     	
-		<style>
+	<style>
 		body { padding-left: 10px; }
 		.row { margin-top: 10px; }
-		</style>
+	</style>
 
-  	</head>
-  	<body>
+  </head>
+  <body>
+  	<div class="page-header">
   		<h1>Zdrava Prehrana</h1>
-  		
-  		<div class="row">
+  	</div>
+		
+		<!--prijava-->
+  	<div class="row">
 		<div class="col-md-6">
 		<div class="container">
-    		<legend>Prijava</legend>
-    		<div class="row">
-   				<label class="col-md-2">Ime in priimek </label>
-    			<input class="col-md-2" id="prijava" type="text" placeholder="ime in priimek">
-    		</div>
-    		<div class="row">
-    			<div class="col-md-2">
-    			<button class="btn btn-primary">Vredu</button>
-    			</div>
-    		</div>
-    		<div class="row">
-    			<div class="col-md-2">
+		
+    	<legend id="test1">Prijava</legend>
+			<div class="row">
+ 				<label class="col-md-1">Ime in priimek</label>
+ 				<label id="prijavljen" class="col-md-1"></label>
+				<input class="col-md-2" id="prijava" type="text" placeholder="ime in priimek">
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+				<label id="labelEHRID">EHR: </button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-1">
+				<button class="btn btn-primary" onclick="nameToEHR()">Prijava</button>
+				</div>
+				<div class="col-md-1">
+				<button class="btn btn-danger" onclick="odjava()">Odjava</button>
+				</div>
+				<div class="col-md-2">
 				<button class="btn" id="newUsrBtn">Nov uporabnik</button>
 				</div>
 			</div>
+			
+		<div class="row"></div>
+		<div class="row"></div>
+		<div class="row"></div>
+		
 		</div>
 		</div>	
-		</div>
-		
-		<div class="row"></div>
-		<div class="row"></div>
-		<div class="row"></div>
+		</div><!-- /row /col /container -->
 
+
+		<!--nov uporabnik - toggle-->
 		<div class="row">
 		<div class="col-md-6" id="newUsrDiv">
-		<div class="container">
+		<div class="container" style="background-color: #D0D0D0">
 			<legend>Nov Uporabnik</legend>
 			<div class="row">
 				<label class="col-md-2">Ime</label>
-				<input class="col-md-2 id="newIme" type="text" placeholder="ime">
+				<input class="col-md-2" id="newIme" type="text" placeholder="ime">
 			</div>
 			<div class="row">
 				<label class="col-md-2">Priimek</label>
-				<input class="col-md-2 id="newPriimek" type="text" placeholder="priimek">
+				<input class="col-md-2" id="newPriimek" type="text" placeholder="priimek">
 			</div>
 			<div class="row">
 				<label class="col-md-2">Datum rojstva</label>
-				<input class="col-md-2 id="newDatum" type="text" placeholder="datum rojstva">
+				<input class="col-md-2" id="newDatum" type="text" placeholder="datum rojstva">
 			</div>
 			<div class="row">
 				<div class="col-md-2">
-				<button id="newPortdi" class="btn btn-primary">Potrdi</button>
+				<button id="newPotrdi" class="btn btn-primary" onclick="dodajNovegaPacienta()">Potrdi</button>
 				</div>
 			</div>
-				
+			<div class="row">
+				<div class="col-md-2">
+				<label id="newURL">URL: </label>
+				</div>
+			</div>
+		
+		<div class="row"></div>
+		<div class="row"></div>
+		<div class="row"></div>
+		
 		</div>	
 		</div>
+		</div><!-- /row /col /container -->
+		
+		<!--vnos meritev-->
+  	<div class="row">
+		<div class="col-md-6">
+		<div class="container">
+		
+    	<legend>Vnos meritev</legend>
+  		<div class="row">
+ 				<label class="col-md-1">masa</label>
+  			<input class="col-md-1" id="vnosMasa" type="text" placeholder="masa">
+  			<label class="col-md-2">[kg]</label>
+  		</div>
+  		<div class="row">
+ 				<label class="col-md-1">višina</label>
+  			<input class="col-md-1" id="vnosVisina" type="text" placeholder="višina">
+  			<label class="col-md-2">[cm]</label>
+  		</div>
+  		<div class="row">
+ 				<label class="col-md-1">datum</label>
+  			<input class="col-md-1" id="vnosDatum" type="text" placeholder="datum">
+  			<label class="col-md-2">[leto-mesec-dan]</label>
+  		</div>
+  		<div class="row">
+  			<div class="col-md-2">
+ 				<button id="btnVnesiMer" class="btn btn-primary">Vnesi</button>
+ 				</div>	
+  		</div>
+			
+		<div class="row"></div>
+		<div class="row"></div>
+		<div class="row"></div>	
+		
 		</div>
-		
-		<div></div>
-		
-		<div></div>
+		</div>	
+		</div><!-- /row /col /container -->
 		
 		<div></div>
 		
