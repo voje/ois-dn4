@@ -20,135 +20,151 @@
   	<div class="page-header">
   		<h1>Zdrava Prehrana</h1>
   	</div>
-		
+	
+	<!--poravnanost levo, desno-->
+	<div class="col-md-6">
+	
 		<!--prijava-->
-  	<div class="row">
-		<div class="col-md-6">
-		<div class="container">
-		
-    	<legend id="test1">Prijava</legend>
-			<div class="row">
- 				<label class="col-md-1">Ime in priimek</label>
- 				<label id="prijavljen" class="col-md-1"></label>
-				<input class="col-md-2" id="prijava" type="text" placeholder="ime in priimek">
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-				<label id="labelEHRID">EHR: </button>
+		<!--<div class="col-md-6">-->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+    			<h3 class="panel-title">Prijava</h3>
+    		</div>
+    		<div class="panel-body">
+				<div class="row">
+	 				<label class="col-md-3">Ime in priimek</label>
+	 				<label id="prijavljen" class="col-md-3"></label>
+					<input class="col-md-4" id="prijava" type="text" placeholder="ime in priimek">
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+					<label id="labelEHRID">EHR: </button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					<button class="btn btn-primary" onclick="nameToEHR()">Prijava</button>
+					</div>
+					<div class="col-md-2">
+					<button class="btn btn-danger" onclick="odjava()">Odjava</button>
+					</div>
+					<div class="col-md-2">
+					<button class="btn" id="newUsrBtn">Novi uporabnik</button>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-1">
-				<button class="btn btn-primary" onclick="nameToEHR()">Prijava</button>
-				</div>
-				<div class="col-md-1">
-				<button class="btn btn-danger" onclick="odjava()">Odjava</button>
-				</div>
-				<div class="col-md-2">
-				<button class="btn" id="newUsrBtn">Novi uporabnik</button>
-				</div>
-			</div>
+		</div><!--panbody-->
 			
 		<div class="row"></div>
 		<div class="row"></div>
-		<div class="row"></div>
-		
-		</div>
-		</div>	
-		</div><!-- /row /col /container -->
-
 
 		<!--nov uporabnik - toggle-->
-		<div class="row">
-		<div class="col-md-6" id="newUsrDiv">
-		<div class="container" style="background-color: #D0D0D0">
-			<legend>Nov Uporabnik</legend>
-			<div class="row">
-				<label class="col-md-2">Ime</label>
-				<input class="col-md-2" id="newIme" type="text" placeholder="ime">
-			</div>
-			<div class="row">
-				<label class="col-md-2">Priimek</label>
-				<input class="col-md-2" id="newPriimek" type="text" placeholder="priimek">
-			</div>
-			<div class="row">
-				<label class="col-md-2">Datum rojstva</label>
-				<input class="col-md-2" id="newDatum" type="text" placeholder="leto-mesec-dan">
-			</div>
-			<div class="row">
-				<div class="col-md-1">
-				<button id="newPotrdi" class="btn btn-primary" onclick="dodajNovegaPacienta()">Potrdi</button>
+		<div class="panel panel-default" id="newUsrDiv">
+			<div class="panel-heading">
+    			<h3 class="panel-title">Novi uporabnik</h3>
+    		</div>
+    		<div class="panel-body">
+				<!--<div class="col-md-6">-->
+				<div class="row">
+					<label class="col-md-3">Ime</label>
+					<input class="col-md-3" id="newIme" type="text" placeholder="ime">
 				</div>
-				<div class="col-md-1">
-				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Pripravljeni<span class="caret"></span>
-					</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#" onclick="randomPacient('Randall Flagg')">Randall Flagg</a></li>
-					<li><a href="#" onclick="randomPacient('Arktos Snežak')">Arktos Snežak</a></li>
-					<li><a href="#" onclick="randomPacient('Abraham Lincoln')">Abraham Lincoln</a></li>
-			  	</ul>
+				<div class="row">
+					<label class="col-md-3">Priimek</label>
+					<input class="col-md-3" id="newPriimek" type="text" placeholder="priimek">
 				</div>
+				<div class="row">
+					<label class="col-md-3">Datum rojstva</label>
+					<input class="col-md-3" id="newDatum" type="text" placeholder="leto-mesec-dan">
 				</div>
-			</div>
-			<!--<div class="row">
-				<div class="col-md-2">
-				<label id="newURL">URL: </label>
+				<div class="row">
+					<div class="col-md-3">
+						<button id="newPotrdi" class="btn btn-primary" onclick="dodajNovegaPacienta()">Potrdi</button>
+					</div>
+					<div class="col-md-3">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Pripravljeni<span class="caret"></span>
+						</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#" onclick="randomPacient('Randall Flagg')">Randall Flagg</a></li>
+						<li><a href="#" onclick="randomPacient('Arktos Snežak')">Arktos Snežak</a></li>
+						<li><a href="#" onclick="randomPacient('Abraham Lincoln')">Abraham Lincoln</a></li>
+				  	</ul>
+					</div>
+					</div>
 				</div>
-			</div>-->
+			</div><!--panbody-->
+		</div><!--pan-->
 		
 		<div class="row"></div>
 		<div class="row"></div>
-		<div class="row"></div>
-		
-		</div>	
-		</div>
-		</div><!-- /row /col /container -->
 		
 		<!--vnos meritev-->
-  		<div class="row">
-		<div class="col-md-6">
-		<div class="container">
+    	<div class="panel panel-primary">
+			<div class="panel-heading">
+    			<h3 class="panel-title">Vnos meritev</h3>
+    		</div>
+    		<div class="panel-body">
+    		
+		  		<div class="row">
+					<label class="col-md-3">masa</label>
+		  			<input class="col-md-3" id="vnosMasa" type="text" placeholder="masa">
+		  			<label class="col-md-4">[kg]</label>
+		  		</div>
+		  		<div class="row">
+		 			<label class="col-md-3">višina</label>
+		  			<input class="col-md-3" id="vnosVisina" type="text" placeholder="višina">
+		  			<label class="col-md-4">[cm]</label>
+		  		</div>
+		  		<div class="row">
+					<label class="col-md-3">datum</label>
+		  			<input class="col-md-3" id="vnosDatum" type="text" placeholder="datum">
+		  			<label class="col-md-4">[leto-mesec-dan]</label>
+		  		</div>
+		  		<div class="row">
+		  			<div class="col-md-2">
+					<button id="btnVnesiMer" class="btn btn-primary" onclick="vnesiMeritve()">Vnesi</button>
+					</div>	
+		  		</div>
+			</div>
+		</div><!--pan-->
 		
-    	<legend>Vnos meritev</legend>
-  		<div class="row">
- 				<label class="col-md-1">masa</label>
-  			<input class="col-md-1" id="vnosMasa" type="text" placeholder="masa">
-  			<label class="col-md-2">[kg]</label>
-  		</div>
-  		<div class="row">
- 				<label class="col-md-1">višina</label>
-  			<input class="col-md-1" id="vnosVisina" type="text" placeholder="višina">
-  			<label class="col-md-2">[cm]</label>
-  		</div>
-  		<div class="row">
- 				<label class="col-md-1">datum</label>
-  			<input class="col-md-1" id="vnosDatum" type="text" placeholder="datum">
-  			<label class="col-md-2">[leto-mesec-dan]</label>
-  		</div>
-  		<div class="row">
-  			<div class="col-md-2">
- 				<button id="btnVnesiMer" class="btn btn-primary" onclick="vnesiMeritve()">Vnesi</button>
- 				</div>	
-  		</div>
-			
-		<div class="row"></div>
-		<div class="row"></div>
-		<div class="row"></div>
+	<div class="col-md-2">
+		<button type="button" class="btn btn-success">Izpis rezultatov</button>
+	</div>	
 		
+	</div>
+		
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+  			<div class="panel-heading">
+    			<h3 class="panel-title">Panel title</h3>
+  			</div>
+  			<div class="panel-body">
+    			Panel content
+  			</div>
 		</div>
-		</div>	
-		</div><!-- /row /col /container -->
-		
-		<div></div>
-		
-		<div></div>
-		
-		<div></div>
-		
-		<div></div>
-		
-		<div></div>
+	</div>
     	
   	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

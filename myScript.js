@@ -123,6 +123,7 @@ function dodajNovegaPacienta(){
 		return;
 	}
 	dodajNovegaPacienta1(ime, priimek, datRoj);
+	$("#newUsrDiv").hide();
 }
 function dodajNovegaPacienta1(ime, priimek, datRoj){
 	var sessionId = getSessionID();
@@ -243,6 +244,35 @@ function vseMeritve(ehrID){
 	});
 }
 
+function getBMI(){
+	$.ajax({
+    	url: "https://rest.ehrscape.com/ThinkCDS/services/CDSResources/guide/execute/BMI.Calculation.v.1/" + currentEHR,
+    	type: "GET",
+    	headers: {"Ehr-Session": getSessionID()},
+    	success: function(data){
+    		var bmiValue = "";
+    		var bmiDetails = "";
+    		if(data instanceof Array){
+    			if(data[0].hasOwnProperty("results")){
+    				data[0].results.forEach(function(v, k){
+    					if(v.archetypeId === "openEHR-EHR-OBSERVATION.body_mass_index.v1"){
+		                    var rounded = Math.round(v.value.magnitude * 100.0) / 100.0;
+		                    bmiValue = rounded + ' ' + v.value.units;
+		                    console.log("BMI = " + bmiValue);
+		            	}else{
+                        	if(v.archetypeId === "openEHR-EHR-EVALUATION.gdl_result_details.v1"){
+                            	bmiDetails = v.value.value;
+                            	console.log("BMIdetails: " + bmiDetails);
+                       		}
+                    	}//else
+    				})//function
+    			}//if
+    		}
+    	}
+    });
+}
+
+//FUNKCIJE ZA RANDOM PACIENTA ####################
 //+- 1.5kg
 function randomMasa(staraMasa){
 	masa = staraMasa - 1.5 + Math.random()*3;
@@ -279,13 +309,12 @@ function ustvariRandomPacienta(ime, priimek, datRoj, masa, visina, datZac, stMer
 		r_datumi[i] = randomDatum(r_datumi[i-1]);
 	}
 
-	$("#newUsrDiv").hide();
 	var oldCurrEHR = currentEHR;
 	dodajNovegaPacienta1(ime, priimek, datRoj);
+	$("#newUsrDiv").hide();
 	setTimeout(function() { urp1(r_mase, visina, r_datumi, stMeritev); }, 3000);
 	setTimeout(function() { vseMeritve(currentEHR); }, 5000);
 }
-
 function randomPacient(string){
 	switch(string){
 		case "Randall Flagg":	//primel normalne teže
@@ -299,7 +328,7 @@ function randomPacient(string){
 			break;
 	}
 }
-
+//########################################
 
 
 
