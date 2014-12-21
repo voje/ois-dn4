@@ -6,7 +6,7 @@ var currentEHR = "";
 var stikalo = 0;
 
 //test Abraham Lincoln: 39ff2767-5805-4585-8377-0b3bfa9abbf6
-//EHRToName("39ff2767-5805-4585-8377-0b3bfa9abbf6");
+EHRToName("fd8aecdd-0007-42ad-89b0-b50208c0b6e1");
 
 function getSessionID(){
 	var response = $.ajax({
@@ -124,6 +124,7 @@ function dodajNovegaPacienta(){
 	}
 	dodajNovegaPacienta1(ime, priimek, datRoj);
 	$("#newUsrDiv").hide();
+	$("#rezultati").hide();
 }
 function dodajNovegaPacienta1(ime, priimek, datRoj){
 	var sessionId = getSessionID();
@@ -219,10 +220,6 @@ function vnesiMeritve1(masa, visina, datum){
 	});
 }
 
-function vseMeritve1(){
-	return vseMeritve(currentEHR);
-}
-
 //poišče vse zapise mase pacienta (podobna stvar, kot je v dokumentaciji)
 function vseMeritve(ehrID){
 	var podatki = [mase = new Array(), datumi = new Array()];
@@ -253,6 +250,7 @@ function vseMeritve(ehrID){
 }
 
 function getBMI(){
+	var bmi, kategorija;
 	$.ajax({
     	url: "https://rest.ehrscape.com/ThinkCDS/services/CDSResources/guide/execute/BMI.Calculation.v.1/" + currentEHR,
     	type: "GET",
@@ -266,11 +264,15 @@ function getBMI(){
     					if(v.archetypeId === "openEHR-EHR-OBSERVATION.body_mass_index.v1"){
 		                    var rounded = Math.round(v.value.magnitude * 100.0) / 100.0;
 		                    bmiValue = rounded + ' ' + v.value.units;
-		                    console.log("BMI = " + bmiValue);
+		                    bmi = bmiValue;
+		                    console.log("BMI = " + bmi);
+		                    izpisRezultatov(bmi);
 		            	}else{
                         	if(v.archetypeId === "openEHR-EHR-EVALUATION.gdl_result_details.v1"){
                             	bmiDetails = v.value.value;
+                            	kategorija = bmiDetails;
                             	console.log("BMIdetails: " + bmiDetails);
+                            	
                        		}
                     	}//else
     				})//function
@@ -278,6 +280,22 @@ function getBMI(){
     		}
     	}
     });
+}
+
+function izpisRezultatov(bmi){
+	$("#rezultati").show();
+	bmi = bmi.split(" ")[0];
+	$("#rez1").append("Vaš BMI znaša: " + bmi);
+	if(bmi<25){	//vredu
+		$("#rez2").text("Vaša telesna teža je normalna. Jeste lahko karkoli. Tu je nekaj predlogov kuharskih spletnih strani:");
+		$("#rez3").html("<ul><li><a href='http://www.reciperoulette.tv/#?recipe=474' target='_blank'>RecipeRoulette.com</a></li><li><a href='http://www.kulinarika.net/' target='_blank'>kulinarika.net</a></li></ul>");
+	}
+	else if(bmi<30){ //prekomerna teža
+		$("#rez2").text("Imate rahlo prekomerno telesno težo. Predlagali vam bomo nekaj shujševalnih programov:");
+		$("#rez3").html("<ul><li><a href='http://www.health.com/health/gallery/0,,20678467,00.html' target='_blank'>Health.com</a></li><li><a href='http://www.myrecipes.com/weight-loss-recipes' target='_blank'>myRecipes.com</a></li>");
+	}else{	//debelost
+		$("#rez2").text("Vaša telesna teža je prekomerna. Svetujemo vam, da se s specialistom posvetujete o nadaljnih ukrepih. Predlagamo naslednji seznam zdravnikov:");
+	}
 }
 
 //FUNKCIJE ZA RANDOM PACIENTA ####################
@@ -320,6 +338,7 @@ function ustvariRandomPacienta(ime, priimek, datRoj, masa, visina, datZac, stMer
 	var oldCurrEHR = currentEHR;
 	dodajNovegaPacienta1(ime, priimek, datRoj);
 	$("#newUsrDiv").hide();
+	$("#rezultati").hide();
 	setTimeout(function() { urp1(r_mase, visina, r_datumi, stMeritev); }, 3000);
 	setTimeout(function() { vseMeritve(currentEHR); }, 5000);
 }
@@ -331,8 +350,8 @@ function randomPacient(string){
 		case "Arktos Snežak":	//primer debelega
 			ustvariRandomPacienta("Arktos", "Snežak", "2000-2-5", 200, 150, "2003-9-1", 10);
 			break;
-		case "Abraham Lincoln":	//primer prelahkega
-			ustvariRandomPacienta("Abraham", "Lincoln", "1809-2-12", 60, 193, "1856-5-3", 10);
+		case "Meghan Trainor":	//primer prelahkega
+			ustvariRandomPacienta("Meghan", "Trainor", "1994-2-12", 70, 160, "2010-5-3", 10);
 			break;
 	}
 }
