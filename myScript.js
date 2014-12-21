@@ -25,6 +25,7 @@ function odjava(){
 	$("#prijava").attr("placeholder", "ime priimek");
 	$("#labelEHRID").text("EHR:");
 	$("#prijavljen").text("");
+	$("#rezultati").hide();
 }
 
 //argument je String EHRID
@@ -295,6 +296,7 @@ function izpisRezultatov(bmi){
 		$("#rez3").html("<ul><li><a href='http://www.health.com/health/gallery/0,,20678467,00.html' target='_blank'>Health.com</a></li><li><a href='http://www.myrecipes.com/weight-loss-recipes' target='_blank'>myRecipes.com</a></li>");
 	}else{	//debelost
 		$("#rez2").text("Vaša telesna teža je prekomerna. Svetujemo vam, da se s specialistom posvetujete o nadaljnih ukrepih. Predlagamo naslednji seznam zdravnikov:");
+		$("#rez3").html("<ul><li><a href='http://zdravniki.org/zdravniki' target='_blank'>Zdravniki.org</a></li></ul>");
 	}
 }
 
