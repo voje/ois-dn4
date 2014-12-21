@@ -219,8 +219,13 @@ function vnesiMeritve1(masa, visina, datum){
 	});
 }
 
+function vseMeritve1(){
+	return vseMeritve(currentEHR);
+}
+
 //poišče vse zapise mase pacienta (podobna stvar, kot je v dokumentaciji)
 function vseMeritve(ehrID){
+	var podatki = [mase = new Array(), datumi = new Array()];
 	console.log("EHR: " + currentEHR);
 	$.ajax({
 		url: baseUrl + "/demographics/ehr/" + currentEHR + "/party",
@@ -238,10 +243,13 @@ function vseMeritve(ehrID){
 		headers: {"Ehr-Session": getSessionID()},
 		success: function(data){
 			for(var i in data){
+				podatki[0][i] = data[i].weight;
+				podatki[1][i] = data[i].time;
 				console.log(data[i].time + ": " + data[i].weight + " " + data[i].unit);
 			}
 		}
 	});
+	return podatki;
 }
 
 function getBMI(){
@@ -330,7 +338,78 @@ function randomPacient(string){
 }
 //########################################
 
+function drawGraph(){
+	$(document).ready(function(){
+		var margin = {top: 20, right: 20, bottom: 30, left: 40},
+			width = document.getElementById("d3jsGraph").offsetWidth - 50;
+			height = 200;
 
+		var x = d3.scale.ordinal()
+			.rangeRoundBands([0, width], .1);
+
+		var y = d3.scale.linear()
+			.range([height, 0]);
+
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom");
+
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.ticks(10);
+
+		var svg = d3.select("#d3jsGraph").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+		//vir: http://www.telegraph.co.uk/health/healthnews/8302317/Obesity-tables-which-nations-have-the-highest-BMIs-in-Western-Europe.html
+		d3.tsv("menObesity.tsv", type, function(error, data) {
+		  x.domain(data.map(function(d) { return d.drzava; }));
+		  y.domain([0, d3.max(data, function(d) { return d.procent; })]);
+
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis)
+			  .selectAll("text")  
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", function(d) {
+					return "rotate(-20)" 
+					});
+
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", 6)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Procent prebivalstva");
+
+		  svg.selectAll(".bar")
+			  .data(data)
+			.enter().append("rect")
+			  .attr("class", "bar")
+			  .attr("x", function(d) { return x(d.drzava); })
+			  .attr("width", x.rangeBand())
+			  .attr("y", function(d) { return y(d.procent); })
+			  .attr("height", function(d) { return height - y(d.procent); });
+
+		});
+
+		function type(d) {
+		  d.procent = +d.procent;
+		  return d;
+		}
+	});
+}
 
 
 
